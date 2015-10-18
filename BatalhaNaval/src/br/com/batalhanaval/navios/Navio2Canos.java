@@ -2,19 +2,22 @@ package br.com.batalhanaval.navios;
 
 import java.util.ArrayList;
 
-import br.com.batalhanaval.mapa.Posicao;
+import br.com.batalhanaval.mapa.Item;
 import br.com.batalhanaval.mapa.Rotacao;
+import br.com.batalhanaval.mapa.TipoItem;
 
 public class Navio2Canos extends Navio {
-	public Navio2Canos(Posicao posicaoInicial,Rotacao rotacao){
+	public Navio2Canos(Item posicaoInicial,Rotacao rotacao){
+		posicaoInicial.setTipo(TipoItem.Navio);
+
 		switch (rotacao) {
 		case Direita:
 		case Esquerda:
-			gerarPosicoesHorizontal(posicaoInicial);
+			getPosicoesOcupadas().addAll(gerarPosicoesHorizontal(posicaoInicial));
 			break;
 		case Cima:
 		case Baixo:
-			gerarPosicoesVertical(posicaoInicial);
+			getPosicoesOcupadas().addAll(gerarPosicoesVertical(posicaoInicial));
 			break;
 		default:
 			break;
@@ -22,21 +25,23 @@ public class Navio2Canos extends Navio {
 	}
 
 	// *##  *posicao central   
-	private void gerarPosicoesHorizontal (Posicao posicaoInicial){
-		ArrayList<Posicao> posicoes = new ArrayList<Posicao>();
+	private ArrayList<Item> gerarPosicoesHorizontal (Item posicaoInicial){
+		ArrayList<Item> posicoes = new ArrayList<Item>();
 		
 		posicoes.add(posicaoInicial);
 		posicoes.add(posicaoInicial.posicaoNova(0, 1));
-
+		return posicoes;
 	}
 
 	//  #        
 	//  #
  	//  *    *posicao central        
-	private void gerarPosicoesVertical (Posicao posicaoInicial){
-		ArrayList<Posicao> posicoes = new ArrayList<Posicao>();
+	private ArrayList<Item> gerarPosicoesVertical (Item posicaoInicial){
+		ArrayList<Item> posicoes = new ArrayList<Item>();
 		
 		posicoes.add(posicaoInicial);
 		posicoes.add(posicaoInicial.posicaoNova(1, 0));
+		return posicoes;
+
 	}
 }

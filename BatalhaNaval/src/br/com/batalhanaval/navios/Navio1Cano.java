@@ -1,19 +1,18 @@
 package br.com.batalhanaval.navios;
 
-import java.util.ArrayList;
-
-import br.com.batalhanaval.mapa.Posicao;
+import br.com.batalhanaval.mapa.Item;
 import br.com.batalhanaval.mapa.Rotacao;
+import br.com.batalhanaval.mapa.TipoItem;
 
 public class Navio1Cano extends Navio {
-	public Navio1Cano(Posicao posicaoInicial,Rotacao rotacao){
+	public Navio1Cano(Item posicaoInicial,Rotacao rotacao){
+		posicaoInicial.setTipo(TipoItem.Navio);
 		switch (rotacao) {
 		case Direita:
 		case Esquerda:
 		case Cima:
 		case Baixo:
-			ArrayList<Posicao> posicoes = new ArrayList<Posicao>();
-			posicoes.add(posicaoInicial);
+			getPosicoesOcupadas().add(posicaoInicial);
 			break;
 		default:
 			break;

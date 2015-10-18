@@ -2,24 +2,26 @@ package br.com.batalhanaval.navios;
 
 import java.util.ArrayList;
 
-import br.com.batalhanaval.mapa.Posicao;
+import br.com.batalhanaval.mapa.Item;
 import br.com.batalhanaval.mapa.Rotacao;
+import br.com.batalhanaval.mapa.TipoItem;
 
 public class PortaAviao extends Navio {
 
-	public PortaAviao(Posicao posicaoInicial,Rotacao rotacao){
+	public PortaAviao(Item posicaoInicial,Rotacao rotacao){
+		posicaoInicial.setTipo(TipoItem.PortaAviao);
 		switch (rotacao) {
 		case Direita:
-			gerarPosicoesDireita(posicaoInicial);
+			getPosicoesOcupadas().addAll(gerarPosicoesDireita(posicaoInicial));
 			break;
 		case Esquerda:
-			gerarPosicoesEsquerda(posicaoInicial);
+			getPosicoesOcupadas().addAll(gerarPosicoesEsquerda(posicaoInicial));
 			break;
 		case Cima:
-			gerarPosicoesCima(posicaoInicial);
+			getPosicoesOcupadas().addAll(gerarPosicoesCima(posicaoInicial));
 			break;
 		case Baixo:
-			gerarPosicoesBaixo(posicaoInicial);
+			getPosicoesOcupadas().addAll(gerarPosicoesBaixo(posicaoInicial));
 			break;
 		default:
 			break;
@@ -29,8 +31,8 @@ public class PortaAviao extends Navio {
 	//  #   
 	// *###  *posicao central   
 	//  #
-	private void gerarPosicoesDireita (Posicao posicaoInicial){
-		ArrayList<Posicao> posicoes = new ArrayList<Posicao>();
+	private ArrayList<Item> gerarPosicoesDireita (Item posicaoInicial){
+		ArrayList<Item> posicoes = new ArrayList<Item>();
 		
 		posicoes.add(posicaoInicial.posicaoNova(-1, 0));
 		posicoes.add(posicaoInicial);
@@ -38,13 +40,16 @@ public class PortaAviao extends Navio {
 		
 		posicoes.add(posicaoInicial.posicaoNova(0, 1));
 		posicoes.add(posicaoInicial.posicaoNova(0, 2));
+		
+		return posicoes;
+		
 	}
 	
 	//    #   
 	//  ###*  *posicao central   
 	//    #
-	private void gerarPosicoesEsquerda (Posicao posicaoInicial){
-		ArrayList<Posicao> posicoes = new ArrayList<Posicao>();
+	private ArrayList<Item> gerarPosicoesEsquerda (Item posicaoInicial){
+		ArrayList<Item> posicoes = new ArrayList<Item>();
 		
 		posicoes.add(posicaoInicial.posicaoNova(-1, 0));
 		posicoes.add(posicaoInicial);
@@ -52,6 +57,8 @@ public class PortaAviao extends Navio {
 		
 		posicoes.add(posicaoInicial.posicaoNova(0, -1));
 		posicoes.add(posicaoInicial.posicaoNova(0, -2));
+		
+		return posicoes;
 	}
 	
 
@@ -59,8 +66,8 @@ public class PortaAviao extends Navio {
 	//  #        *posicao central
 	// ###   
  	//  *            
-	private void gerarPosicoesCima (Posicao posicaoInicial){
-		ArrayList<Posicao> posicoes = new ArrayList<Posicao>();
+	private ArrayList<Item> gerarPosicoesCima (Item posicaoInicial){
+		ArrayList<Item> posicoes = new ArrayList<Item>();
 		
 		posicoes.add(posicaoInicial.posicaoNova(0, -1));
 		posicoes.add(posicaoInicial);
@@ -68,14 +75,16 @@ public class PortaAviao extends Navio {
 		
 		posicoes.add(posicaoInicial.posicaoNova(-1,0));
 		posicoes.add(posicaoInicial.posicaoNova(-2,0));
+		
+		return posicoes;
 	}
 	
 	//  *     
 	// ###        *posicao central
 	// 	#   
  	//  #            
-	private void gerarPosicoesBaixo (Posicao posicaoInicial){
-		ArrayList<Posicao> posicoes = new ArrayList<Posicao>();
+	private ArrayList<Item> gerarPosicoesBaixo (Item posicaoInicial){
+		ArrayList<Item> posicoes = new ArrayList<Item>();
 		
 		posicoes.add(posicaoInicial.posicaoNova(0, -1));
 		posicoes.add(posicaoInicial);
@@ -83,6 +92,8 @@ public class PortaAviao extends Navio {
 		
 		posicoes.add(posicaoInicial.posicaoNova(1,0));
 		posicoes.add(posicaoInicial.posicaoNova(2,0));
+		
+		return posicoes;
 	}
 
 	

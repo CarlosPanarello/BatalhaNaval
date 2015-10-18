@@ -3,9 +3,10 @@ package br.com.batalhanaval;
 public enum Mensagens {
 	
 	NAVIO_ADICIONADO("Navio incluido com sucesso!",1),
-	NAVIO_POSICAO_INVALIDA("Navio não pode ser adicionado nessa posição",2),
-	TIRO_NA_AGUA("Você errou.",3),
-	TIRO_ACERTOU("Você acertou.",4);
+	NAVIO_POSICAO_INVALIDA("Navio nÃ£o pode ser adicionado nessa posiÃ§Ã£o",2),
+	TIRO_NA_AGUA("VocÃª errou.",3),
+	TIRO_ACERTOU("VocÃª acertou.",4),
+	NAVIO_POSICAO_OCUPADA("JÃ¡ existe um navio nessa posiÃ§Ã£o!",5);
 	
 	private int codigoMensagem;
 	private String msg;
