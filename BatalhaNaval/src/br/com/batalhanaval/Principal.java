@@ -153,7 +153,7 @@ public class Principal {
 	
 
 	public static String validarComando(String comando){
-		String[] comandos = comando.split("\\s+");
+		String[] comandos = comando.trim().split("\\s+");
 		String posicao = "";
 		
 		if( comandos.length >=3 ){
@@ -170,7 +170,7 @@ public class Principal {
 					System.out.println("Informe uma coluna entre 1 e 10");
 					return "";
 				} else {
-					posicao = posicao + " " +comandos[1].substring(0, 1);
+					posicao = posicao + " " +comandos[1];
 				}
 				
 			} catch (Exception e) {
@@ -195,9 +195,9 @@ public class Principal {
 	
 	
 	public static Linha obterLinha(String comando){
-		String comandos[] = comando.split("\\s+");
+		String comandos[] = comando.trim().split("\\s+");
 		
-		switch (comandos[0].substring(0, 1)) {
+		switch (comandos[0].trim().substring(0, 1)) {
 		case "A":
 		case "a":
 			return Linha.A;
@@ -234,7 +234,7 @@ public class Principal {
 	}
 	
 	public static int obterColuna (String comando){
-		String comandos[] = comando.split("\\s+");
+		String comandos[] = comando.trim().split("\\s+");
 		int retorno =0 ;
 		
 		try {
@@ -246,9 +246,9 @@ public class Principal {
 	}
 	
 	public static Rotacao obterRotacao(String comando){
-		String comandos[] = comando.split("\\s+");
+		String comandos[] = comando.trim().split("\\s+");
 		
-		switch (comandos[2].substring(0, 1)) {
+		switch (comandos[2].trim().substring(0, 1)) {
 		case "B":
 		case "b":
 		case "V":

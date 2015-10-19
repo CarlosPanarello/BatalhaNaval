@@ -112,12 +112,46 @@ public class Mapa {
 		return retorno ;
 	}
 	
+	public String getLinhaAcertos(Linha linha){
+		
+		ArrayList<Item> itensLinha = new ArrayList<Item>();
+		String retorno = "|";
+		
+		for(Item p : getItens()){
+			if (p.getLinha().equals(linha)){
+				itensLinha.add(p);
+			}
+		}
+		
+		Collections.sort(itensLinha);
+		
+		for(Item p:itensLinha){
+			retorno = retorno +  " " +  (p.isPosicaoAtingida() ?  p.toString()   : " " +TipoItem.Agua.getDesc()+" "  ) + " |";
+		}
+		
+		
+		return retorno ;
+	}
+	
 	public void imprimirMapa(){
 		
 		System.out.println("     1     2     3     4     5     6     7     8     9    10");
 		System.out.println("  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐");
 		for(Linha l: Linha.values()){
 			System.out.println(l.getLetra() + " "+ this.getLinha(l));
+			if(l.getNumero() != 10){
+				System.out.println("  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤");
+			}
+		}
+		System.out.println("  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘");
+	}
+	
+	public void imprimirMapaPontosAcertos(){
+		
+		System.out.println("     1     2     3     4     5     6     7     8     9    10");
+		System.out.println("  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐");
+		for(Linha l: Linha.values()){
+			System.out.println(l.getLetra() + " "+ this.getLinhaAcertos(l));
 			if(l.getNumero() != 10){
 				System.out.println("  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤");
 			}
