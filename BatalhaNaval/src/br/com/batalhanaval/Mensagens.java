@@ -7,7 +7,9 @@ public enum Mensagens {
 	TIRO_NA_AGUA("Você errou.",3),
 	TIRO_ACERTOU("Você acertou.",4),
 	NAVIO_POSICAO_OCUPADA("Já existe um navio nessa posição!",5),
-	TIRO_POSICAO_INVALIDA("Posição do tiro invalido.",6);
+	TIRO_POSICAO_INVALIDA("Posição do tiro invalido.",6),
+	TIRO_ACERTOU_PORTA("Você acertou um porta aviões",7),
+	AFUNDOU_PORTA("Você afundou um porta aviões",7);
 	
 	private int codigoMensagem;
 	private String msg;

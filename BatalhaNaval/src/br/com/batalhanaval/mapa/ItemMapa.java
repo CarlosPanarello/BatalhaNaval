@@ -1,68 +1,54 @@
 package br.com.batalhanaval.mapa;
 
+import java.util.HashSet;
+
 import br.com.batalhanaval.Mensagens;
 
-public abstract class ItemMapa implements Comparable<ItemMapa> {
+public abstract class ItemMapa{
 	
-	private boolean posicaoAtingida;
-	private boolean posicaoOcupada;
-	private Posicao posicao;
-	private String  simboloMapa;
+	private HashSet<Posicao> posicoes;
 	
 	protected ItemMapa(Posicao p){
-		this.posicao = p;
-		this.posicaoAtingida = false;
+		posicoes = new HashSet<Posicao>();
+		posicoes.add(p);
 	}
 	
-	protected ItemMapa(Posicao p,boolean posicaoOcupada,String simboloMapa){
-		this(p);
-		this.posicaoOcupada = posicaoOcupada;
-	}
-
-	public boolean isPosicaoAtingida() {
-		return posicaoAtingida;
-	}
-
-	protected void setPosicaoAtingida(boolean posicaoAtingida) {
-		this.posicaoAtingida = posicaoAtingida;
-	}
-
-	public boolean isPosicaoOcupada() {
-		return posicaoOcupada;
-	}
-
-	public Posicao getPosicao() {
-		return posicao;
-	}
-
-	public String getSimboloMapa() {
-		return simboloMapa;
-	}
+//	protected ItemMapa(HashSet<Posicao> posicoes){
+//		this.posicoes = new HashSet<Posicao>();
+//		this.posicoes.addAll(posicoes);
+//	}
 	
-	public abstract Mensagens recebeTiro();
+	public abstract Mensagens recebeTiro(Ponto p);
 	
-	public boolean itemPertenceLinha(Linha linha){
-		return this.posicao.getLinha().equals(linha);
-	}
-	
-	@Override
-	public String toString() {
-		
-		if(this.posicaoAtingida){
-			return "*" + this.simboloMapa + "*";
+	protected boolean itemAtingido(Ponto p){
+		Posicao posicao = itemPossuiPosicao(p); 
+		if(posicao != null){
+			posicao.setPosicaoAtingida(true);
+			return true;
+		} else {
+			return false;
 		}
-		
-		return " " + this.simboloMapa + " ";
 	}
-
-	@Override
-	public int compareTo(ItemMapa p) {
-		if(p == null){
-			return -1;
-		}
-				
-		return this.posicao.compareTo(p.getPosicao());
-	}
-
 	
+	public boolean itemCompletamenteAtingido(){
+		for(Posicao p: posicoes){
+			if(p.isPosicaoAtingida() == false){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private Posicao itemPossuiPosicao(Ponto p){
+		for(Posicao posicao:posicoes){
+			if(posicao.getPonto().equals(p)){
+				return posicao;
+			}
+		}
+		return null;
+	}
+
+	public HashSet<Posicao> getPosicoes() {
+		return posicoes;
+	}
 }

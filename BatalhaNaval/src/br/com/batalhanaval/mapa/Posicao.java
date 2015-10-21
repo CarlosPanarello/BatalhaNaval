@@ -1,48 +1,52 @@
 package br.com.batalhanaval.mapa;
 
 public class Posicao implements Comparable<Posicao>{
-	private Linha linha;
-	private int coluna;
+	private boolean posicaoAtingida;
+	private boolean posicaoOcupada;
+	private String  simboloMapa;
+	private Ponto ponto;
 	
-	
-	public Posicao(Linha linha, int coluna) {
+	public Posicao(Ponto p) {
 		super();
-		this.linha = linha;
-		this.coluna = coluna;
-	}
-
-	public Linha getLinha() {
-		return linha;
-	}
-
-
-	public int getColuna() {
-		return coluna;
+		this.ponto = p;
+		this.posicaoAtingida = false;
+		this.posicaoOcupada = false;
 	}
 	
-	private Linha obterLinha(int linha){
-		
-		for(Linha l : Linha.values()){
-			if(l.getNumero() == linha){
-				return l;
-			}
-		}
-		return null;
-	}
-	
-	public Posicao posicaoNova(int incrementoLinha, int incrementoColuna){
-		
-		Linha l = obterLinha(this.getLinha().getNumero() + incrementoLinha);
-		
-		return new Posicao(l , this.coluna + incrementoColuna);
+	public Posicao(Ponto p,boolean posicaoOcupada,String simboloMapa){
+		this(p);
+		this.posicaoOcupada = posicaoOcupada;
 	}
 
+	public boolean isPosicaoAtingida() {
+		return posicaoAtingida;
+	}
+
+	public void setPosicaoAtingida(boolean posicaoAtingida) {
+		this.posicaoAtingida = posicaoAtingida;
+	}
+
+	public boolean isPosicaoOcupada() {
+		return posicaoOcupada;
+	}
+
+	public String getSimboloMapa() {
+		return simboloMapa;
+	}
+	
+	public boolean posicaoPertenceLinha(Linha linha){
+		return this.ponto.getLinha().equals(linha);
+	}
+
+	public Ponto getPonto() {
+		return ponto;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + coluna;
-		result = prime * result + ((linha == null) ? 0 : linha.hashCode());
+		result = prime * result + ((ponto == null) ? 0 : ponto.hashCode());
 		return result;
 	}
 
@@ -55,33 +59,34 @@ public class Posicao implements Comparable<Posicao>{
 		if (getClass() != obj.getClass())
 			return false;
 		Posicao other = (Posicao) obj;
-		if (coluna != other.coluna)
-			return false;
-		if (linha != other.linha)
+		if (ponto == null) {
+			if (other.ponto != null)
+				return false;
+		} else if (!ponto.equals(other.ponto))
 			return false;
 		return true;
 	}
 	
 	@Override
-	public int compareTo(Posicao o) {
-		if(o == null){
+	public int compareTo(Posicao arg0) {
+		if(this.equals(arg0)){
+			return 0;
+		}
+		
+		if(arg0 == null || arg0.getPonto() == null){
 			return -1;
 		}
 		
-		if(this.getLinha().equals(o.getLinha())){
-			if ( this.getColuna() == o.getColuna()){
-				return 0;
-			}
-			
-			if( this.getColuna() > o.getColuna()){
-				return 1;
-			} else {
-				return -1;
-			}
-		}else{
-			return this.getLinha().compareTo(o.getLinha());
-		}
+		return this.getPonto().compareTo(arg0.getPonto());
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		
+		if(this.posicaoAtingida){
+			return "*" + this.simboloMapa + "*";
+		}
+		
+		return " " + this.simboloMapa + " ";
+	}
 }
