@@ -4,16 +4,16 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import br.com.batalhanaval.itens.Navio1Cano;
+import br.com.batalhanaval.itens.Navio2Canos;
+import br.com.batalhanaval.itens.Navio3Canos;
+import br.com.batalhanaval.itens.Navio4Canos;
+import br.com.batalhanaval.itens.PortaAviao;
 import br.com.batalhanaval.mapa.Item;
 import br.com.batalhanaval.mapa.Linha;
 import br.com.batalhanaval.mapa.Mapa;
 import br.com.batalhanaval.mapa.Rotacao;
 import br.com.batalhanaval.mapa.TipoItem;
-import br.com.batalhanaval.navios.Navio1Cano;
-import br.com.batalhanaval.navios.Navio2Canos;
-import br.com.batalhanaval.navios.Navio3Canos;
-import br.com.batalhanaval.navios.Navio4Canos;
-import br.com.batalhanaval.navios.PortaAviao;
 
 public class Principal {
 

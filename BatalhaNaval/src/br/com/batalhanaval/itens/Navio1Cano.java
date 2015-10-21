@@ -1,4 +1,4 @@
-package br.com.batalhanaval.navios;
+package br.com.batalhanaval.itens;
 
 import br.com.batalhanaval.mapa.Item;
 import br.com.batalhanaval.mapa.Rotacao;

@@ -1,4 +1,4 @@
-package br.com.batalhanaval.navios;
+package br.com.batalhanaval.itens;
 
 import java.util.ArrayList;
 

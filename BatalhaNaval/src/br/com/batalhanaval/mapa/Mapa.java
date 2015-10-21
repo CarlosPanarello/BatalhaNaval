@@ -5,14 +5,15 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import br.com.batalhanaval.Mensagens;
-import br.com.batalhanaval.navios.Navio;
+import br.com.batalhanaval.itens.Agua;
+import br.com.batalhanaval.itens.Navio;
 
 public class Mapa {
 		
 	private int qtdLinha;
 	private int qtdColuna;
 	
-	private HashSet<Item> itens;
+	private HashSet<ItemMapa> itens;
 	
 	public Mapa(){
 		this(10);
@@ -26,19 +27,18 @@ public class Mapa {
 		super();
 		this.qtdLinha = qtdLinha;
 		this.qtdColuna = qtdColuna;
-		popularMapa();
+		inicializarMapa();
 	}
 	
-	private void popularMapa(){
-		itens = new HashSet<Item>();
+	private void inicializarMapa(){
+		itens = new HashSet<ItemMapa>();
 		
 		//linha
 		for(Linha linha: Linha.values()){
-			
 			if(linha.getNumero() <= qtdLinha ){
 				//coluna
 				for(int icoluna = 1; icoluna <= qtdColuna; icoluna++){
-					itens.add(new Item(linha, icoluna, false,TipoItem.Agua));
+					itens.add(new Agua(new Posicao(linha,icoluna) ));
 				}				
 			}
 		}
@@ -46,9 +46,9 @@ public class Mapa {
 	
 	public Mensagens addNavioNoMapa(Navio navio){
 		
-		for(Item pMapa : itens){
+		for(ItemMapa pMapa : itens){
 			
-			for(Item pNavio : navio.getPosicoesOcupadas()){
+			for(ItemMapa pNavio : navio.getPosicoesOcupadas()){
 				if(!itens.contains(pNavio)){
 					return Mensagens.NAVIO_POSICAO_INVALIDA;
 				}
@@ -66,18 +66,13 @@ public class Mapa {
 	}
 	
 	
-	public Mensagens addTiro(Item posicao){
-		for(Item p : itens){
-			if(p.equals(posicao)){
-				p.setPosicaoAtingida(true);
-				if( p.isPosicaoOcupada()){
-					return Mensagens.TIRO_ACERTOU;
-				} else {
-					return Mensagens.TIRO_NA_AGUA;
-				}
+	public Mensagens addTiro(Posicao p){
+		for(ItemMapa i : itens){
+			if(i.equals(p)){
+				return i.recebeTiro();
 			}
 		}
-		return Mensagens.TIRO_NA_AGUA;
+		return Mensagens.TIRO_POSICAO_INVALIDA;
 	}
 	
 	public int getQtdLinha() {
@@ -87,24 +82,24 @@ public class Mapa {
 		return qtdColuna;
 	}
 
-	public HashSet<Item> getItens() {
+	public HashSet<ItemMapa> getItens() {
 		return itens;
 	}
 	
 	public String getLinha(Linha linha){
 		
-		ArrayList<Item> itensLinha = new ArrayList<Item>();
+		ArrayList<ItemMapa> itensLinha = new ArrayList<ItemMapa>();
 		String retorno = "|";
 		
-		for(Item p : getItens()){
-			if (p.getLinha().equals(linha)){
-				itensLinha.add(p);
+		for(ItemMapa i : getItens()){
+			if (i.equals(linha)){
+				itensLinha.add(i);
 			}
 		}
 		
 		Collections.sort(itensLinha);
 		
-		for(Item p:itensLinha){
+		for(ItemMapa p:itensLinha){
 			retorno = retorno +  " " + p.toString() + " |";
 		}
 		
@@ -114,21 +109,20 @@ public class Mapa {
 	
 	public String getLinhaAcertos(Linha linha){
 		
-		ArrayList<Item> itensLinha = new ArrayList<Item>();
+		ArrayList<ItemMapa> itensLinha = new ArrayList<ItemMapa>();
 		String retorno = "|";
 		
-		for(Item p : getItens()){
-			if (p.getLinha().equals(linha)){
-				itensLinha.add(p);
+		for(ItemMapa i : getItens()){
+			if (i.itemPertenceLinha(linha)){
+				itensLinha.add(i);
 			}
 		}
 		
 		Collections.sort(itensLinha);
 		
-		for(Item p:itensLinha){
-			retorno = retorno +  " " +  (p.isPosicaoAtingida() ?  p.toString()   : " " +TipoItem.Agua.getDesc()+" "  ) + " |";
+		for(ItemMapa i:itensLinha){
+			retorno = retorno +  " " +   i.toString() + " |";
 		}
-		
 		
 		return retorno ;
 	}
