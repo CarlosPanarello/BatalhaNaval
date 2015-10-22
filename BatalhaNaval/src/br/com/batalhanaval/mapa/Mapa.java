@@ -38,7 +38,7 @@ public class Mapa {
 			if(linha.getNumero() <= qtdLinha ){
 				//coluna
 				for(int icoluna = 1; icoluna <= qtdColuna; icoluna++){
-					itens.add(new Agua(new Posicao(linha,icoluna) ));
+					itens.add( new Agua(new Ponto(linha, icoluna)));
 				}				
 			}
 		}
@@ -46,9 +46,25 @@ public class Mapa {
 	
 	public Mensagens addNavioNoMapa(Navio navio){
 		
+		
 		for(ItemMapa pMapa : itens){
 			
-			for(ItemMapa pNavio : navio.getPosicoesOcupadas()){
+			for(Posicao pNavio : navio.getPosicoes()){
+				if(!itens.contains(pNavio)){
+					return Mensagens.NAVIO_POSICAO_INVALIDA;
+				}
+				
+				if(pNavio.equals(pMapa) && pMapa.isPosicaoOcupada()){
+					return Mensagens.NAVIO_POSICAO_OCUPADA;
+				}
+			}
+		}
+		
+		
+		
+		for(ItemMapa pMapa : itens){
+			
+			for(Posicao pNavio : navio.getPosicoes()){
 				if(!itens.contains(pNavio)){
 					return Mensagens.NAVIO_POSICAO_INVALIDA;
 				}
@@ -129,28 +145,28 @@ public class Mapa {
 	
 	public void imprimirMapa(){
 		
-		System.out.println("     1     2     3     4     5     6     7     8     9    10");
-		System.out.println("  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐");
+				System.out.println("     1     2     3     4     5     6     7     8     9    10");
+				System.out.println("  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐");
 		for(Linha l: Linha.values()){
 			System.out.println(l.getLetra() + " "+ this.getLinha(l));
 			if(l.getNumero() != 10){
 				System.out.println("  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤");
 			}
 		}
-		System.out.println("  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘");
+				System.out.println("  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘");
 	}
 	
 	public void imprimirMapaPontosAcertos(){
 		
-		System.out.println("     1     2     3     4     5     6     7     8     9    10");
-		System.out.println("  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐");
+				System.out.println("     1     2     3     4     5     6     7     8     9    10");
+				System.out.println("  ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┐");
 		for(Linha l: Linha.values()){
 			System.out.println(l.getLetra() + " "+ this.getLinhaAcertos(l));
 			if(l.getNumero() != 10){
 				System.out.println("  ├─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┼─────┤");
 			}
 		}
-		System.out.println("  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘");
+				System.out.println("  └─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┴─────┘");
 	}
 	
 }
