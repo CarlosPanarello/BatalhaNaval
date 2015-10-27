@@ -47,45 +47,37 @@ public class Mapa {
 	public Mensagens addNavioNoMapa(Navio navio){
 		
 		
-		for(ItemMapa pMapa : itens){
-			
-			for(Posicao pNavio : navio.getPosicoes()){
-				if(!itens.contains(pNavio)){
-					return Mensagens.NAVIO_POSICAO_INVALIDA;
-				}
-				
-				if(pNavio.equals(pMapa) && pMapa.isPosicaoOcupada()){
-					return Mensagens.NAVIO_POSICAO_OCUPADA;
-				}
-			}
-		}
-		
-		
-		
-		for(ItemMapa pMapa : itens){
-			
-			for(Posicao pNavio : navio.getPosicoes()){
-				if(!itens.contains(pNavio)){
-					return Mensagens.NAVIO_POSICAO_INVALIDA;
-				}
-				
-				if(pNavio.equals(pMapa) && pMapa.isPosicaoOcupada()){
-					return Mensagens.NAVIO_POSICAO_OCUPADA;
+		for(ItemMapa iMapa : itens){
+
+			for(Posicao posMapa : iMapa.getPosicoes()){
+
+				for(Posicao pNavio : navio.getPosicoes()){
+					if(!iMapa.getPosicoes().contains(pNavio)){
+						return Mensagens.NAVIO_POSICAO_INVALIDA;
+					}
+
+					if(pNavio.equals(posMapa) && posMapa.isPosicaoOcupada()){
+						return Mensagens.NAVIO_POSICAO_OCUPADA;
+					}
 				}
 			}
 		}
 		
-		itens.removeAll(navio.getPosicoesOcupadas());
-		itens.addAll(navio.getPosicoesOcupadas());
+		
+		itens.remove(navio);
+		itens.add(navio);
 		
 		return Mensagens.NAVIO_ADICIONADO;
 	}
 	
 	
 	public Mensagens addTiro(Posicao p){
-		for(ItemMapa i : itens){
-			if(i.equals(p)){
-				return i.recebeTiro();
+		for(ItemMapa iMapa : itens){
+
+			for(Posicao posMapa : iMapa.getPosicoes()){
+				if(posMapa.equals(p)){
+					return iMapa.recebeTiro(p.getPonto());
+				}
 			}
 		}
 		return Mensagens.TIRO_POSICAO_INVALIDA;
@@ -104,18 +96,20 @@ public class Mapa {
 	
 	public String getLinha(Linha linha){
 		
-		ArrayList<ItemMapa> itensLinha = new ArrayList<ItemMapa>();
+		HashSet<Posicao> itensPos = new HashSet<Posicao>();
 		String retorno = "|";
 		
-		for(ItemMapa i : getItens()){
-			if (i.equals(linha)){
-				itensLinha.add(i);
+		for(ItemMapa iMapa : getItens()){
+			for(Posicao posMapa : iMapa.getPosicoes()){
+				if(posMapa.getPonto().getLinha().equals(linha)){
+					itensPos.add(posMapa);
+				}
 			}
 		}
 		
-		Collections.sort(itensLinha);
+		Collections.sort(itensPos);
 		
-		for(ItemMapa p:itensLinha){
+		for(ItemMapa p:itensPos){
 			retorno = retorno +  " " + p.toString() + " |";
 		}
 		
