@@ -10,9 +10,10 @@ import br.com.batalhanaval.itens.Navio2Canos;
 import br.com.batalhanaval.itens.Navio3Canos;
 import br.com.batalhanaval.itens.Navio4Canos;
 import br.com.batalhanaval.itens.PortaAviao;
-import br.com.batalhanaval.mapa.Item;
 import br.com.batalhanaval.mapa.Linha;
 import br.com.batalhanaval.mapa.Mapa;
+import br.com.batalhanaval.mapa.Ponto;
+import br.com.batalhanaval.mapa.Posicao;
 import br.com.batalhanaval.mapa.Rotacao;
 import br.com.batalhanaval.mapa.TipoItem;
 
@@ -53,20 +54,21 @@ public class PrincipalSinglePlayer {
 	
 	public static Integer aproveitamento(Mapa m, int qtdItens){
 		
-		Integer qtdAcertos = 0;
-		
-		for(Item i: m.getItens()){
-			if(i.isPosicaoOcupada() && i.isPosicaoAtingida()){
-				qtdAcertos++;
-			}
-		}
-		
-		
-		if(qtdAcertos == 0){
-			return 0;
-		}
-		
-		return  (qtdItens/qtdAcertos) * 100;
+//		Integer qtdAcertos = 0;
+//		
+//		for(Item i: m.getItens()){
+//			if(i.isPosicaoOcupada() && i.isPosicaoAtingida()){
+//				qtdAcertos++;
+//			}
+//		}
+//		
+//		
+//		if(qtdAcertos == 0){
+//			return 0;
+//		}
+//		
+//		return  (qtdItens/qtdAcertos) * 100;
+		return 100;
 	}
 	
 	public static boolean jogoTerminou(int rodadas){
@@ -96,7 +98,7 @@ public class PrincipalSinglePlayer {
 			return realizarTiro(m);
 		}
 		
-		System.out.println(m.addTiro(new Item(obterLinha(comando),obterColuna(comando))).getMsg());
+		System.out.println(m.addTiro(new Posicao(new Ponto(obterLinha(comando),obterColuna(comando)))).getMsg());
 		
 		return m;
 	}
@@ -153,19 +155,19 @@ public class PrincipalSinglePlayer {
 		
 		switch (tipo) {
 		case PortaAviao:
-			msg = m.addNavioNoMapa(new PortaAviao(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+			msg = m.addNavioNoMapa(new PortaAviao(new Ponto(linhaEntrada,conlunaEntrada), rotacaoEntrada));
 			break;
 		case Navio1:
-			msg = m.addNavioNoMapa(new Navio1Cano(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+			msg = m.addNavioNoMapa(new Navio1Cano(new Ponto(linhaEntrada,conlunaEntrada), rotacaoEntrada));
 			break;
 		case Navio2:
-			msg = m.addNavioNoMapa(new Navio2Canos(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+			msg = m.addNavioNoMapa(new Navio2Canos(new Ponto(linhaEntrada,conlunaEntrada), rotacaoEntrada));
 			break;
 		case Navio3:
-			msg = m.addNavioNoMapa(new Navio3Canos(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+			msg = m.addNavioNoMapa(new Navio3Canos(new Ponto(linhaEntrada,conlunaEntrada), rotacaoEntrada));
 			break;
 		case Navio4:
-			msg = m.addNavioNoMapa(new Navio4Canos(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+			msg = m.addNavioNoMapa(new Navio4Canos(new Ponto(linhaEntrada,conlunaEntrada), rotacaoEntrada));
 			break;
 		default:
 			msg = Mensagens.NAVIO_POSICAO_INVALIDA;

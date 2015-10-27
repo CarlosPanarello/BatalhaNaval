@@ -3,6 +3,7 @@ package br.com.batalhanaval.mapa;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 
 import br.com.batalhanaval.Mensagens;
 import br.com.batalhanaval.itens.Agua;
@@ -96,12 +97,12 @@ public class Mapa {
 	
 	public String getLinha(Linha linha){
 		
-		HashSet<Posicao> itensPos = new HashSet<Posicao>();
+		List<Posicao> itensPos = new ArrayList<Posicao>();
 		String retorno = "|";
 		
 		for(ItemMapa iMapa : getItens()){
 			for(Posicao posMapa : iMapa.getPosicoes()){
-				if(posMapa.getPonto().getLinha().equals(linha)){
+				if(posMapa.getPonto().getLinha().equals(linha) && !itensPos.contains(posMapa)){
 					itensPos.add(posMapa);
 				}
 			}
@@ -109,7 +110,7 @@ public class Mapa {
 		
 		Collections.sort(itensPos);
 		
-		for(ItemMapa p:itensPos){
+		for(Posicao p:itensPos){
 			retorno = retorno +  " " + p.toString() + " |";
 		}
 		
@@ -119,19 +120,21 @@ public class Mapa {
 	
 	public String getLinhaAcertos(Linha linha){
 		
-		ArrayList<ItemMapa> itensLinha = new ArrayList<ItemMapa>();
+		List<Posicao> itensLinha =  new ArrayList<Posicao>();
 		String retorno = "|";
 		
-		for(ItemMapa i : getItens()){
-			if (i.itemPertenceLinha(linha)){
-				itensLinha.add(i);
+		for(ItemMapa iMapa : getItens()){
+			for(Posicao posMapa : iMapa.getPosicoes()){
+				if(posMapa.posicaoPertenceLinha(linha)  && !itensLinha.contains(posMapa)){
+					itensLinha.add(posMapa);
+				}
 			}
 		}
 		
 		Collections.sort(itensLinha);
 		
-		for(ItemMapa i:itensLinha){
-			retorno = retorno +  " " +   i.toString() + " |";
+		for(Posicao p:itensLinha){
+			retorno = retorno +  " " + p.toString() + " |";
 		}
 		
 		return retorno ;
