@@ -1,15 +1,18 @@
 package br.com.batalhanaval.navios;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import br.com.batalhanaval.mapa.Item;
+import br.com.batalhanaval.mapa.Linha;
 import br.com.batalhanaval.mapa.Rotacao;
 import br.com.batalhanaval.mapa.TipoItem;
 
 public class Navio4Canos extends Navio {
-	public Navio4Canos(Item posicaoInicial,Rotacao rotacao){
-		posicaoInicial.setTipo(TipoItem.Navio);
-
+	public Navio4Canos(Linha linha, int coluna,Rotacao rotacao){
+		Item posicaoInicial = new Item(linha, coluna, true, TipoItem.Navio4, 80);
+		this.fator = (new BigDecimal(1.2)).setScale(2,RoundingMode.CEILING);
 		switch (rotacao) {
 		case Direita:
 		case Esquerda:

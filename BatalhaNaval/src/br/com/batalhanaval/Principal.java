@@ -120,19 +120,19 @@ public class Principal {
 			
 			switch (tipo) {
 			case PortaAviao:
-				msg = m.addNavioNoMapa(new PortaAviao(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+				msg = m.addNavioNoMapa(new PortaAviao(linhaEntrada, conlunaEntrada, rotacaoEntrada));
 				break;
 			case Navio1:
-				msg = m.addNavioNoMapa(new Navio1Cano(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+				msg = m.addNavioNoMapa(new Navio1Cano(linhaEntrada, conlunaEntrada, rotacaoEntrada));
 				break;
 			case Navio2:
-				msg = m.addNavioNoMapa(new Navio2Canos(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+				msg = m.addNavioNoMapa(new Navio2Canos(linhaEntrada, conlunaEntrada, rotacaoEntrada));
 				break;
 			case Navio3:
-				msg = m.addNavioNoMapa(new Navio3Canos(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+				msg = m.addNavioNoMapa(new Navio3Canos(linhaEntrada, conlunaEntrada, rotacaoEntrada));
 				break;
 			case Navio4:
-				msg = m.addNavioNoMapa(new Navio4Canos(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+				msg = m.addNavioNoMapa(new Navio4Canos(linhaEntrada, conlunaEntrada, rotacaoEntrada));
 				break;
 			default:
 				msg = Mensagens.NAVIO_POSICAO_INVALIDA;

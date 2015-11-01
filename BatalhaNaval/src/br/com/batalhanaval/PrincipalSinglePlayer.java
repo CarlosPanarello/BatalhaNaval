@@ -3,6 +3,7 @@ package br.com.batalhanaval;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.util.Random;
 
 import br.com.batalhanaval.mapa.Item;
@@ -10,6 +11,7 @@ import br.com.batalhanaval.mapa.Linha;
 import br.com.batalhanaval.mapa.Mapa;
 import br.com.batalhanaval.mapa.Rotacao;
 import br.com.batalhanaval.mapa.TipoItem;
+import br.com.batalhanaval.navios.Navio;
 import br.com.batalhanaval.navios.Navio1Cano;
 import br.com.batalhanaval.navios.Navio2Canos;
 import br.com.batalhanaval.navios.Navio3Canos;
@@ -22,13 +24,22 @@ public class PrincipalSinglePlayer {
 	public static void main(String[] args) {
 		
 		System.out.println("########################################################################################################");
+		System.out.println("Pontuação do jogo:");
+		System.out.println(" - Acertar uma parte do Porta Aviao vale 100 pontos e se afundar você ganha bonus de 25%.");
+		System.out.println(" - Acertar uma parte do Navio de 4 canos vale 80 pontos e se afundar você ganha bonus de 20%.");
+		System.out.println(" - Acertar uma parte do Navio de 3 canos vale 60 pontos e se afundar você ganha bonus de 15%.");
+		System.out.println(" - Acertar uma parte do Navio de 2 canos vale 40 pontos e se afundar você ganha bonus de 10%.");
+		System.out.println(" - Acertar uma parte do Navio de 1 canos vale 10 pontos.");
+		System.out.println(" Você terá 5 rodadas de três tiros.");
+		
+		
 		System.out.println("Aguarde enquanto a maquina define os navios no mapa");
 		System.out.println("########################################################################################################");
 		Mapa mapaJogadorMaquina = preencherMapaMaquina();
 		
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-		mapaJogadorMaquina.imprimirMapa();
-		System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		//System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+		//mapaJogadorMaquina.imprimirMapa();
+		//System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
 		int rodadas =1 ;
 		while(!jogoTerminou(rodadas)){
@@ -42,7 +53,7 @@ public class PrincipalSinglePlayer {
 		}
 		
 		System.out.println("########################################################################################################");
-		System.out.println("O jogo terminou, o seu aproveitamento foi de " + aproveitamento(mapaJogadorMaquina,25) + "%");
+		System.out.println("O jogo terminou, o sua pontuacao foi de " + pontuacao(mapaJogadorMaquina) + " pontos.");
 		System.out.println("########################################################################################################");
 		System.out.println("O mapa do jogo aberto: ");
 		
@@ -51,26 +62,19 @@ public class PrincipalSinglePlayer {
 		
 	}
 	
-	public static Integer aproveitamento(Mapa m, int qtdItens){
+	public static BigDecimal pontuacao(Mapa m){
 		
-		Integer qtdAcertos = 0;
+		BigDecimal res = new BigDecimal(0);
 		
-		for(Item i: m.getItens()){
-			if(i.isPosicaoOcupada() && i.isPosicaoAtingida()){
-				qtdAcertos++;
-			}
+		for(Navio n : m.getNaviosMapa()){
+			res = res.add(n.pontuacao());
 		}
 		
-		
-		if(qtdAcertos == 0){
-			return 0;
-		}
-		
-		return  (qtdItens/qtdAcertos) * 100;
+		return  res;
 	}
 	
 	public static boolean jogoTerminou(int rodadas){
-		return rodadas > 10;
+		return rodadas > 5;
 	}
 
 	public static Mapa realizarTiro(Mapa m){
@@ -153,19 +157,19 @@ public class PrincipalSinglePlayer {
 		
 		switch (tipo) {
 		case PortaAviao:
-			msg = m.addNavioNoMapa(new PortaAviao(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+			msg = m.addNavioNoMapa(new PortaAviao(linhaEntrada, conlunaEntrada, rotacaoEntrada));
 			break;
 		case Navio1:
-			msg = m.addNavioNoMapa(new Navio1Cano(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+			msg = m.addNavioNoMapa(new Navio1Cano(linhaEntrada, conlunaEntrada, rotacaoEntrada));
 			break;
 		case Navio2:
-			msg = m.addNavioNoMapa(new Navio2Canos(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+			msg = m.addNavioNoMapa(new Navio2Canos(linhaEntrada, conlunaEntrada, rotacaoEntrada));
 			break;
 		case Navio3:
-			msg = m.addNavioNoMapa(new Navio3Canos(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+			msg = m.addNavioNoMapa(new Navio3Canos(linhaEntrada, conlunaEntrada, rotacaoEntrada));
 			break;
 		case Navio4:
-			msg = m.addNavioNoMapa(new Navio4Canos(new Item(linhaEntrada, conlunaEntrada), rotacaoEntrada));
+			msg = m.addNavioNoMapa(new Navio4Canos(linhaEntrada, conlunaEntrada, rotacaoEntrada));
 			break;
 		default:
 			msg = Mensagens.NAVIO_POSICAO_INVALIDA;

@@ -1,15 +1,19 @@
 package br.com.batalhanaval.navios;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import br.com.batalhanaval.mapa.Item;
+import br.com.batalhanaval.mapa.Linha;
 import br.com.batalhanaval.mapa.Rotacao;
 import br.com.batalhanaval.mapa.TipoItem;
 
 public class PortaAviao extends Navio {
 
-	public PortaAviao(Item posicaoInicial,Rotacao rotacao){
-		posicaoInicial.setTipo(TipoItem.PortaAviao);
+	public PortaAviao(Linha linha, int coluna,Rotacao rotacao){
+		Item posicaoInicial = new Item(linha, coluna, true, TipoItem.PortaAviao, 100);
+		this.fator = (new BigDecimal(1.25)).setScale(2,RoundingMode.CEILING);
 		switch (rotacao) {
 		case Direita:
 			getPosicoesOcupadas().addAll(gerarPosicoesDireita(posicaoInicial));

@@ -6,18 +6,20 @@ public class Item implements Comparable<Item> {
 	private boolean posicaoAtingida;
 	private boolean posicaoOcupada;
 	private TipoItem tipo;
+	private int pontuacao;
 	
 	public Item (Linha linha, int coluna){
-		this(linha, coluna, false, TipoItem.Agua);
+		this(linha, coluna, false, TipoItem.Agua,0);
 	}
 	
-	Item(Linha linha, int coluna,boolean posicaoOcupada,TipoItem tipo) {
+	public Item(Linha linha, int coluna,boolean posicaoOcupada,TipoItem tipo,int pontuacao) {
 		super();
 		this.linha = linha;
 		this.coluna = coluna;
 		this.posicaoAtingida = false;
 		this.posicaoOcupada = posicaoOcupada;
 		this.tipo = tipo;
+		this.pontuacao = pontuacao;
 	}
 
 	public Linha getLinha() {
@@ -42,7 +44,7 @@ public class Item implements Comparable<Item> {
 		
 		Linha l = obterLinha(this.getLinha().getNumero() + incrementoLinha);
 		
-		return new Item(l, this.getColuna() + incrementoColuna,this.isPosicaoOcupada(),this.tipo);
+		return new Item(l, this.getColuna() + incrementoColuna,this.isPosicaoOcupada(),this.tipo,this.pontuacao);
 	}
 
 	public boolean isPosicaoAtingida() {
@@ -127,4 +129,10 @@ public class Item implements Comparable<Item> {
 		
 		return " " + tipo.getDesc() + " ";
 	}
+
+	public int getPontuacao() {
+		return pontuacao;
+	}
+	
+	
 }
